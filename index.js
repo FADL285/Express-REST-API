@@ -1,7 +1,36 @@
 const express = require('express');
+const Ajv = require('ajv');
 
 const app = express();
 const port = process.env.PORT || 3000;
+const ajv = new Ajv();
+
+const schema = {
+  type: 'object',
+  properties: {
+    first_name: {
+      type: 'string',
+      pattern: '^[a-zA-Z]{3,}$'
+    },
+    last_name: {
+      type: 'string',
+      pattern: '^[a-zA-Z]{3,}$'
+    },
+    dept: {
+      type: 'string',
+      enum: ['IT', 'CS', 'IS', 'BIO', 'AI']
+    }
+  }
+  // required: ['first_name', 'last_name', 'dept']
+  // minProperties: 1,
+  // maxProperties: 3
+};
+
+const createValidator = ajv.compile({
+  ...schema,
+  required: ['first_name', 'last_name', 'dept']
+});
+const updateValidator = ajv.compile({ ...schema });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,6 +59,16 @@ app.get('/api/students/:id', (req, res) => {
 
 // create a new student
 app.post('/api/students', (req, res) => {
+  const valid = createValidator(req.body);
+
+  if (!valid) {
+    console.log(createValidator.errors);
+    res.status(403).json({
+      status: 403,
+      message: 'first_name, last_name and dept are required and be valid'
+    });
+  }
+
   const student = {
     id: '_fa-x-dl_28' + Math.round(Math.random() * 999999),
     first_name: req.body.first_name,
@@ -42,6 +81,16 @@ app.post('/api/students', (req, res) => {
 
 // Update a student
 app.put('/api/students/:id', (req, res) => {
+  const valid = updateValidator(req.body);
+
+  if (!valid) {
+    console.log(updateValidator.errors);
+    res.status(403).json({
+      status: 403,
+      message: 'data not valid'
+    });
+  }
+
   const student = students.find((student) => student.id === req.params.id);
   if (student) {
     if (req.body.first_name) student.first_name = req.body.first_name;
