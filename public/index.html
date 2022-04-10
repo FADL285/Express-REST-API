@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello to Express</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Hello Express</h1>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error magnam repellat provident? Rerum officia corrupti
+    voluptatem veritatis sit! Suscipit ducimus aliquam, recusandae eum asperiores delectus id aliquid veritatis nulla
+    eius.</p>
+  <p>
+    See the API on <strong><a href="/api/students">/api/students</a></strong>
+  </p>
+
+  <ul id="students">
+  </ul>
+
+  <template id="student-template">
+    <li>
+      <h2>Student Name: <strong class="student-name"></strong> </h2>
+      <p>Student Department: <strong class="student-dept"></strong> </p>
+    </li>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

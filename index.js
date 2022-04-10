@@ -34,16 +34,17 @@ const updateValidator = ajv.compile({ ...schema });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 const students = [
   { id: '_fadl_285', first_name: 'Mohamed', last_name: 'Fadl', dept: 'IT' },
   { id: '_ahmed_286x', first_name: 'Ahmed', last_name: 'Reda', dept: 'CS' },
   { id: '_mona_287e', first_name: 'Mona', last_name: 'Fadl', dept: 'BIO' }
 ];
-
-app.get('/', (req, res) => {
-  res.send('REST API on /api/students route');
-});
 
 // Get All students
 app.get('/api/students', (req, res) => {
@@ -67,16 +68,16 @@ app.post('/api/students', (req, res) => {
       status: 403,
       message: 'first_name, last_name and dept are required and be valid'
     });
+  } else {
+    const student = {
+      id: '_fa-x-dl_28' + Math.round(Math.random() * 999999),
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      dept: req.body.dept
+    };
+    students.push(student);
+    res.json(student);
   }
-
-  const student = {
-    id: '_fa-x-dl_28' + Math.round(Math.random() * 999999),
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    dept: req.body.dept
-  };
-  students.push(student);
-  res.json(student);
 });
 
 // Update a student

@@ -1,0 +1,22 @@
+body {
+  background: #eee;
+  text-align: center;
+  margin: 1rem auto;
+  max-width: 1200px;
+}
+
+body p {
+  font-size: 1.5rem;
+}
+
+ul#students {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul li {
+  background: #dcdcdc;
+  padding: 1rem;
+  margin: 1rem auto;
+}
