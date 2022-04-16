@@ -30,8 +30,8 @@ const getAllStudents = async (req, res) => {
 const getStudentById = async (req, res) => {
   const student = await Student.find({ id: req.params.id });
 
-  if (!student?.length)
-    res.status(404).json({
+  if (!student)
+    return res.status(404).json({
       status: 404,
       message: 'Student Not Found'
     });
@@ -41,11 +41,15 @@ const getStudentById = async (req, res) => {
 
 // Update Student
 const updateStudent = async (req, res) => {
-  const student = await Student.findOneAndUpdate(req.params.id, req.body, {
-    returnOriginal: false
-  });
-  if (!student?.length)
-    res.status(404).json({
+  const student = await Student.findOneAndUpdate(
+    { id: req.params.id },
+    req.body,
+    {
+      returnOriginal: false
+    }
+  );
+  if (!student)
+    return res.status(404).json({
       status: 404,
       message: 'Student Not Found'
     });
@@ -54,8 +58,9 @@ const updateStudent = async (req, res) => {
 
 // Delete Student
 const deleteStudent = async (req, res) => {
-  const student = await Student.findOneAndDelete(req.params.id);
-  if (!student?.length)
+  const student = await Student.findOneAndDelete({ id: req.params.id });
+
+  if (!student)
     return res.status(404).json({ status: 404, message: 'Student not found' });
   res.json(student);
 };
