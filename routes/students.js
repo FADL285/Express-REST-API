@@ -6,7 +6,11 @@ const {
   createStudent,
   updateStudent,
   deleteStudent
-} = require('../controllers/students-controller');
+} = require('../controllers/students-controller-db');
+const {
+  createValidatorMW,
+  updateValidatorMW
+} = require('../middlewares/student-validator');
 
 // Get All students
 router.get('/', getAllStudents);
@@ -15,10 +19,10 @@ router.get('/', getAllStudents);
 router.get('/:id', getStudentById);
 
 // create a new student
-router.post('/', createStudent);
+router.post('/', createValidatorMW, createStudent);
 
 // Update a student
-router.put('/:id', updateStudent);
+router.put('/:id', updateValidatorMW, updateStudent);
 
 // Delete student
 router.delete('/:id', deleteStudent);

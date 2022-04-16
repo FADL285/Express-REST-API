@@ -6,26 +6,26 @@ const ajv = new Ajv();
 const schema = {
   type: 'object',
   properties: {
-    first_name: {
+    firstName: {
       type: 'string',
       pattern: '^[a-zA-Z]{3,}$'
     },
-    last_name: {
+    lastName: {
       type: 'string',
       pattern: '^[a-zA-Z]{3,}$'
     },
     dept: {
       type: 'string',
-      enum: ['IT', 'CS', 'IS', 'BIO', 'AI']
+      enum: ['it', 'cs', 'is', 'bio', 'ai', 'general']
     }
   }
-  // required: ['first_name', 'last_name', 'dept']
+  // required: ['firstName', 'lastName', 'dept']
   // minProperties: 1,
   // maxProperties: 3
 };
 const createValidator = ajv.compile({
   ...schema,
-  required: ['first_name', 'last_name', 'dept']
+  required: ['firstName', 'lastName', 'dept']
 });
 const updateValidator = ajv.compile({ ...schema });
 

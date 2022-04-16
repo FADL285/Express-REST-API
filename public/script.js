@@ -16,8 +16,8 @@ const appendStudentsDataToDom = (students) => {
     const clone = template.content.cloneNode(true);
     const studentName = clone.querySelector('.student-name');
     const studentDept = clone.querySelector('.student-dept');
-    studentName.textContent = student.first_name + ' ' + student.last_name;
-    studentDept.textContent = student.dept;
+    studentName.textContent = student.firstName + ' ' + student.lastName;
+    studentDept.textContent = student.department.toUpperCase();
 
     studentsList.appendChild(clone);
   });

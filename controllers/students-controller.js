@@ -1,18 +1,12 @@
 const {
   createValidator,
   updateValidator
-} = require('../utilities/students-validator');
-
-// Students Array.
-const students = [
-  { id: '_fadl_285', first_name: 'Mohamed', last_name: 'Fadl', dept: 'IT' },
-  { id: '_ahmed_286x', first_name: 'Ahmed', last_name: 'Reda', dept: 'CS' },
-  { id: '_mona_287e', first_name: 'Mona', last_name: 'Fadl', dept: 'BIO' }
-];
+} = require('../utilities/student-validator');
+const Student = require('../models/students-model');
 
 // Get All Students
 const getAllStudents = (req, res) => {
-  res.json(students);
+  res.json(Student.fetchAll());
 };
 
 // Get student by id
@@ -30,17 +24,12 @@ const createStudent = (req, res) => {
     console.log(createValidator.errors);
     res.status(403).json({
       status: 403,
-      message: 'first_name, last_name and dept are required and be valid'
+      message: 'firstName, lastName and dept are required and be valid'
     });
   } else {
-    const student = {
-      id: '_fa-x-dl_28' + Math.round(Math.random() * 999999),
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      dept: req.body.dept
-    };
-    students.push(student);
-    res.json(student);
+    const std = new Student(req.body);
+    const stdInfo = std.add();
+    res.json(stdInfo);
   }
 };
 
@@ -58,8 +47,8 @@ const updateStudent = (req, res) => {
 
   const student = students.find((student) => student.id === req.params.id);
   if (student) {
-    if (req.body.first_name) student.first_name = req.body.first_name;
-    if (req.body.last_name) student.last_name = req.body.last_name;
+    if (req.body.firstName) student.firstName = req.body.firstName;
+    if (req.body.lastName) student.lastName = req.body.lastName;
     if (req.body.dept) student.dept = req.body.dept;
     res.json(student);
   } else {
