@@ -14,6 +14,7 @@ main().catch((err) => console.log('ERROR:', err));
 // End mongoose connection.
 
 const studentsRoute = require('./routes/students');
+const usersRoute = require('./routes/users');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,6 +28,7 @@ app.use(logging);
 
 // Students API
 app.use('/api/students', studentsRoute);
+app.use('/api/users', usersRoute);
 
 // //////////////////////////////
 
