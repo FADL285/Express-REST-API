@@ -11,6 +11,7 @@ const {
   createValidatorMW,
   updateValidatorMW
 } = require('../middlewares/student-validator');
+const authMW = require('../middlewares/auth');
 
 // Get All students
 router.get('/', getAllStudents);
@@ -19,12 +20,12 @@ router.get('/', getAllStudents);
 router.get('/:id', getStudentById);
 
 // create a new student
-router.post('/', createValidatorMW, createStudent);
+router.post('/', createValidatorMW, authMW, createStudent);
 
 // Update a student
 router.put('/:id', updateValidatorMW, updateStudent);
 
 // Delete student
-router.delete('/:id', deleteStudent);
+router.delete('/:id', authMW, deleteStudent);
 
 module.exports = router;

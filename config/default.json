@@ -1,5 +1,5 @@
 {
   "jwt": {
-    "secret": ""
+    "secret": "this_is_secret_key_4_jwt"
   }
 }

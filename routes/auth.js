@@ -14,7 +14,6 @@ router.post('/', loginValidatorMW, async (req, res) => {
   if (!validPassword) return res.status(403).json({ message: INVALID_MESSAGE });
   // Send the response if all pass.
   const token = user.genAuthToken();
-  console.log(token);
   res.header('X-Auth-Token', token);
   res.json({ status: 200, message: 'logged-in successfully' });
 });

@@ -1,5 +1,4 @@
 module.exports = (req, res, next) => {
-  console.log('logging ...');
-
+  console.log('logging middleware...');
   next();
 };
