@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const {
-  loginValidatorMW,
-  registerValidatorMW
-} = require('../middlewares/user-validator');
+const { registerValidatorMW } = require('../middlewares/user-validator');
 const User = require('../models/user-model');
 const bcrypt = require('bcrypt');
 
-router.post('/', loginValidatorMW, async (req, res) => {
+router.post('/', registerValidatorMW, async (req, res) => {
   try {
     // Check if the user is already registered
     const exists = await User.findOne({ email: req.body.email }).exec();
@@ -23,6 +20,9 @@ router.post('/', loginValidatorMW, async (req, res) => {
       password: hashedPassword
     });
     await user.save();
+
+    const token = user.genAuthToken();
+    res.header('X-Auth-Token', token);
     res.json({
       status: 200,
       message: 'user registered successfully',

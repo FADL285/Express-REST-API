@@ -15,6 +15,7 @@ main().catch((err) => console.log('ERROR:', err));
 
 const studentsRoute = require('./routes/students');
 const usersRoute = require('./routes/users');
+const authRoute = require('./routes/auth');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -29,6 +30,7 @@ app.use(logging);
 // Students API
 app.use('/api/students', studentsRoute);
 app.use('/api/users', usersRoute);
+app.use('/api/login', authRoute);
 
 // //////////////////////////////
 
